@@ -1,0 +1,28 @@
+from flask import Flask, request, render_template
+from encryption import enccrypt_AES_256, decrypt_AES_256
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    encrypted_data = None
+    decrypted_data = None
+    if request.method == 'POST':
+        key_input = request.form['key']
+        data_input = request.form['data']
+
+        if len(key_input) != 32:
+            return "Kunci harus sepanjang 32 karakter", 400
+
+        key = key_input.encode('utf-8')
+
+        # Encrypt
+        encrypted_data = enccrypt_AES_256(key, data_input)
+
+        # Decrypt
+        decrypted_data = decrypt_AES_256(key, encrypted_data)
+
+    return render_template('form.html', encrypted_data=encrypted_data, decrypted_data=decrypted_data)
+
+if __name__ == "__main__":
+    app.run()

@@ -1,0 +1,19 @@
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad, unpad
+import base64
+
+# Function to encrypt using AES 256-bit
+def enccrypt_AES_256(key, data):
+    iv = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    encrypted_data = cipher.encrypt(pad(data.encode('utf-8'), AES.block_size))
+    return base64.b64encode(iv + encrypted_data).decode('utf-8')
+
+# Function to decrypt using AES 256
+def decrypt_AES_256(key, encrypted_data):
+    encrypted_data = base64.b64decode(encrypted_data.encode('utf-8'))
+    iv = encrypted_data[:16]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    decrypted_data = unpad(cipher.decrypt(encrypted_data[16:]), AES.block_size)
+    return decrypted_data.decode('utf-8')

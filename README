@@ -1,0 +1,13 @@
+# Aplikasi Enkripsi AES 256
+
+Ini adalah aplikasi web sederhana untuk enkripsi dan dekripsi menggunakan algoritma AES 256.
+
+by nikko listio
+
+
+## Cara Menjalankan
+
+1. Clone repositori ini.
+2. Install dependensi dengan perintah:
+   ```bash
+   pip install -r requirements.txt
